@@ -34,19 +34,19 @@ using namespace trabalho;
 int main(int argc, char** argv) {
     
     planilhaQualificacoes pq;   
-    vector<qualificacoes> vetorQualificacoes = pq.ler(argc, argv);
+    map<int,qualificacoes> mapaQualificacoes = pq.ler(argc, argv);
 
     planilhaDocentes pd;
-    vector<docentes> vetorDocentes = pd.ler(argv, argc);
+    map<int,docentes> mapaDocentes = pd.ler(argv, argc);
 
     planilhaPublicacoes pp;
-    vector<publicacoes> vetorPublicacoes = pp.ler(argc, argv, vetorDocentes);    
+    map<int,publicacoes> mapaPublicacoes = pp.ler(argc, argv, mapaDocentes);    
 
     planilhaRegrasDePontuacao pr;
-    vector<regrasDePontuacao> vetorRegras = pr.ler(argc, argv);
+    map<int,regrasDePontuacao> mapaRegras = pr.ler(argc, argv);
 
     planilhaVeiculos pv;
-    vector<veiculos> vetorVeiculos = pv.ler(argc, argv, vetorQualificacoes, vetorPublicacoes);
+    map<int, veiculos> mapaVeiculos = pv.ler(argc, argv, mapaQualificacoes, mapaPublicacoes);
     cout << "qwertyuiopasdfghjklçzxcvbnm";
     int ano = 0;
 
@@ -61,15 +61,15 @@ int main(int argc, char** argv) {
 
     // PARA ATRIBUIR QUALIS A SEUS RESPECTIVOS PONTOS DADO UM ANO
     
-    regrasDePontuacao::expandeQualis(vetorRegras, ano);
+    regrasDePontuacao::expandeQualis(mapaRegras, ano);
     
     
     // PARA O RELATORIO DE ESTATISTICAS
     static estatisticasPublicacoes est;
     
     
-    est.contaNumeroArtigosPorQualis(vetorPublicacoes, vetorQualificacoes);
-    est.contaNumeroArtigosPorDocentes(vetorPublicacoes, vetorQualificacoes);
+    est.contaNumeroArtigosPorQualis(mapaPublicacoes, mapaQualificacoes);
+    est.contaNumeroArtigosPorDocentes(mapaPublicacoes, mapaQualificacoes);
     est.criaArquivoEstatisticas();
 
 

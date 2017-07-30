@@ -25,15 +25,15 @@ using namespace trabalho;
 planilhaVeiculos::planilhaVeiculos() {
 }
 
-vector<veiculos> planilhaVeiculos::getListaVeiculos() {
-    return vetorVeiculos;
+map<int, veiculos> planilhaVeiculos::getListaVeiculos() {
+    return mapaVeiculos;
 }
 
-void planilhaVeiculos::setListaVeiculos(vector<veiculos> vetorVeiculos) {
-    this->vetorVeiculos = vetorVeiculos;
+void planilhaVeiculos::setListaVeiculos(map<int, veiculos> mapaVeiculos) {
+    this->mapaVeiculos = mapaVeiculos;
 }
 
-vector<veiculos> planilhaVeiculos::ler(int argc, char ** argv, vector<qualificacoes> vetorQualis, vector<publicacoes> vetorPublicacoes) {
+map<int, veiculos> planilhaVeiculos::ler(int argc, char ** argv, map<int,qualificacoes> mapaQualis, map<int,publicacoes> mapaPublicacoes) {
     int tiraTitulo = 0;
     vector<string> args(argv, argv + argc);
     for (int i = 0; i < args.size(); i++) {
@@ -45,16 +45,16 @@ vector<veiculos> planilhaVeiculos::ler(int argc, char ** argv, vector<qualificac
             while (!file.eof()) {
                 if (tiraTitulo == 0) {
                     getline(file, linha);
-                    cout << linha << endl;
+                    
                     tiraTitulo++;
-                    j++;
+                    
                     continue;
                 }
                 veiculos veiculo;
 
-                //Lê a linha inteira e divide em um vetor de 5 posicoes
+                //Lê a linha inteira e divide em um mapa de 5 posicoes
                 getline(file, linha);
-                cout << linha << endl;
+                
 
                 vector<string> linhaDividida;
                 istringstream f(linha);
@@ -91,31 +91,32 @@ vector<veiculos> planilhaVeiculos::ler(int argc, char ** argv, vector<qualificac
                 veiculo.setSigla(sigla);
                 veiculo.setTipo(tipo2);
                 veiculo.setIssn(issn);
-
+                
                 // Insere o veiculo na lista de veiculos
-                vetorVeiculos.push_back(veiculo);
-                cout << vetorVeiculos.size() << endl;
+                mapaVeiculos[j] = veiculo;
+                j++;
+                
             }
             file.close();
         }
     }
 
-    siglaVeiculoRepetida(vetorVeiculos);
-    siglaNaoDefinidaNaQualis(vetorQualis, vetorVeiculos);
-    siglaNaoDefinidaNaPubli(vetorPublicacoes, vetorVeiculos);
+    siglaVeiculoRepetida(mapaVeiculos);
+    siglaNaoDefinidaNaQualis(mapaQualis, mapaVeiculos);
+    siglaNaoDefinidaNaPubli(mapaPublicacoes, mapaVeiculos);
 
-    return vetorVeiculos;
+    return mapaVeiculos;
 }
 
-void planilhaVeiculos::siglaVeiculoRepetida(vector<veiculos> vetorVeiculos) {
+void planilhaVeiculos::siglaVeiculoRepetida(map<int, veiculos> mapaVeiculos) {
     
 }
 
-void planilhaVeiculos::siglaNaoDefinidaNaQualis(vector<qualificacoes> vectorQualis,
-        vector<veiculos> vectorVeiculos) {
+void planilhaVeiculos::siglaNaoDefinidaNaQualis(map<int, qualificacoes> mapaQualis,
+        map<int, veiculos> mapaVeiculos) {
 }
 
-void planilhaVeiculos::siglaNaoDefinidaNaPubli(vector<publicacoes> vectorPublicacoes,
-        vector<veiculos> vectorVeiculos) {
+void planilhaVeiculos::siglaNaoDefinidaNaPubli(map<int, publicacoes> vectorPublicacoes,
+        map<int, veiculos> mapaVeiculos) {
 
 }

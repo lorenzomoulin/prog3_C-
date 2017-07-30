@@ -29,15 +29,15 @@ planilhaQualificacoes::planilhaQualificacoes() {
 }
 
 
-vector<qualificacoes> planilhaQualificacoes::getListaQualificacoes(){
-    return vetorQualificacoes;
+map<int,qualificacoes> planilhaQualificacoes::getListaQualificacoes(){
+    return mapaQualificacoes;
 }
 
-void planilhaQualificacoes::setListaQualificacoes(vector<qualificacoes> vetorQualificacoes){
-    this->vetorQualificacoes = vetorQualificacoes;
+void planilhaQualificacoes::setListaQualificacoes(map<int,qualificacoes> mapaQualificacoes){
+    this->mapaQualificacoes = mapaQualificacoes;
 }
 
-vector<qualificacoes> planilhaQualificacoes::ler(int argc, char** argv){
+map<int,qualificacoes> planilhaQualificacoes::ler(int argc, char** argv){
     int tiraTitulo = 0;
     vector<string> args(argv, argv + argc );
     
@@ -50,10 +50,11 @@ vector<qualificacoes> planilhaQualificacoes::ler(int argc, char** argv){
                 
                 string linha;
                 
+                int j = 0;
                  while (!file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        cout << linha << endl;
+                        //cout << linha << endl;
                         tiraTitulo++;
                         
                         continue;
@@ -62,7 +63,7 @@ vector<qualificacoes> planilhaQualificacoes::ler(int argc, char** argv){
 
                     //Lê a linha inteira e divide em um vetor de 5 posicoes
                     getline(file, linha);
-                    cout << linha << endl;
+                    //cout << linha << endl;
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -98,11 +99,11 @@ vector<qualificacoes> planilhaQualificacoes::ler(int argc, char** argv){
                     qualificacao.setSiglaVeiculo(siglaVeiculo);
 
                     //Insere o docente na lista de docentes
-                    vetorQualificacoes.push_back(qualificacao);
-                    
+                    mapaQualificacoes[j] = qualificacao;
+                    j++;
 
                 }
-                cout << "oi" ;
+                //cout << "oi" ;
             }
             file.close();
         }
@@ -110,5 +111,5 @@ vector<qualificacoes> planilhaQualificacoes::ler(int argc, char** argv){
     
     //cout << "oi";
         //codigoRepetidoParaDocente(vetorDocentes);
-        return vetorQualificacoes;
+        return mapaQualificacoes;
 }

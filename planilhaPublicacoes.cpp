@@ -30,15 +30,15 @@ planilhaPublicacoes::planilhaPublicacoes() {
     
 }
 
-vector<publicacoes> planilhaPublicacoes::getListaPublicacoes(){
-    return vetorPublicacoes;
+map<int,publicacoes> planilhaPublicacoes::getListaPublicacoes(){
+    return mapaPublicacoes;
 }
 
-void planilhaPublicacoes::setListaPublicacoes(vector<publicacoes> vetorPublicacoes){
-    this->vetorPublicacoes = vetorPublicacoes;
+void planilhaPublicacoes::setListaPublicacoes(map<int,publicacoes> mapaPublicacoes){
+    this->mapaPublicacoes = mapaPublicacoes;
 }
 
-vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docentes> vetorDocentes){
+map<int,publicacoes> planilhaPublicacoes::ler(int argc, char** argv, map<int,docentes> mapaDocentes){
     int tiraTitulo = 0;
     vector<string> args(argv, argv + argc );
     
@@ -50,11 +50,11 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
             if (file.is_open()){
                 
                 string linha;
-                
+                int k = 0;
                 while (! file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        cout << linha << endl;
+                        //cout << linha << endl;
                         tiraTitulo++;
                         
                         continue;
@@ -62,7 +62,7 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                     publicacoes publicacao;
 
                     getline(file, linha);
-                    cout << linha << endl;
+                    //cout << linha << endl;
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -142,8 +142,8 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                         periodico.setSiglaVeiculo(siglaVeiculo);
                         periodico.setTitulo(titulo);
                         periodico.setVolume(volumePeriodico2);
-                        cout << periodico.getVolume() << endl;
-                        vetorPublicacoes.push_back(periodico);
+                        //cout << periodico.getVolume() << endl;
+                        mapaPublicacoes[k] = publicacao;
                     
                     }//Insere infos na conferencia
                     else if (localConferencia.compare("")) {
@@ -156,19 +156,19 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                         conferencia.setSiglaVeiculo(siglaVeiculo);
                         conferencia.setTitulo(titulo);
                         conferencia.setLocal(localConferencia);
-                        cout << conferencia.getLocal() << endl;
-                        vetorPublicacoes.push_back(conferencia);
+                        //cout << conferencia.getLocal() << endl;
+                        mapaPublicacoes[k] = conferencia;
 
                     }
 
-                    
+                    k++;
                     
 
                 }
             }
             file.close();
         }
-        codigoDocenteNaoEspecificado(vetorPublicacoes, vetorDocentes);
+        codigoDocenteNaoEspecificado(mapaPublicacoes, mapaDocentes);
     }
     /*for (int c = 0 ; c < vetorPublicacoes.size() ; c++){
         
@@ -189,9 +189,9 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
     }*/
 
     //codigoRepetidoParaDocente(vetorDocentes);
-    return vetorPublicacoes;
+    return mapaPublicacoes;
 }
 
-void planilhaPublicacoes::codigoDocenteNaoEspecificado(vector<publicacoes> vetorPublicacoes, vector<docentes> listaDocentes){
+void planilhaPublicacoes::codigoDocenteNaoEspecificado(map<int,publicacoes> mapaPublicacoes, map<int,docentes> mapaDocentes){
     
 }

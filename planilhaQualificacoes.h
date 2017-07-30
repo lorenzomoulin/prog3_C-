@@ -20,12 +20,12 @@
 
 namespace trabalho{
 class planilhaQualificacoes {
-    vector<qualificacoes> vetorQualificacoes; 
+    map<int,qualificacoes> mapaQualificacoes; 
 public:
     planilhaQualificacoes();
-    vector<qualificacoes> getListaQualificacoes();
-    void setListaQualificacoes(vector<qualificacoes> vetorQualificacoes);
-    vector<qualificacoes> ler(int argc, char** argv);
+    map<int,qualificacoes> getListaQualificacoes();
+    void setListaQualificacoes(map<int,qualificacoes> mapaQualificacoes);
+    map<int,qualificacoes> ler(int argc, char** argv);
         
 private:
 

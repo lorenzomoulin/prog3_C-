@@ -18,13 +18,13 @@
 
 namespace trabalho{
 class planilhaRegrasDePontuacao {
-    vector<regrasDePontuacao> vetorRegras;
+    map<int,regrasDePontuacao> mapaRegras;
 public:
     planilhaRegrasDePontuacao();
-    vector<regrasDePontuacao> getListaRegras();
-    void setListaRegras(vector<regrasDePontuacao> vetorRegras);
-    vector<regrasDePontuacao> ler(int argc, char ** argv);
-    void qualisDesconhecidoParaRegras(vector<regrasDePontuacao> vetorRegras);
+    map<int,regrasDePontuacao> getListaRegras();
+    void setListaRegras(map<int, regrasDePontuacao> mapaRegras);
+    map<int,regrasDePontuacao> ler(int argc, char ** argv);
+    void qualisDesconhecidoParaRegras(map<int, regrasDePontuacao> mapaRegras);
 private:
 
 };
