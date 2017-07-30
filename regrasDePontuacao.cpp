@@ -80,7 +80,7 @@ void regrasDePontuacao::setPontuacaoMinimaRecredenciamento(int pontuacaoMinimaRe
     this->pontuacaoMinima = pontuacaoMinima;
 }
 
-void regrasDePontuacao::expandeQualis(vector<regrasDePontuacao> vetorRegras, int ano){
+void regrasDePontuacao::expandeQualis(map<int,regrasDePontuacao> mapaRegras, int ano){
     
     vector<string> qualis;
     vector<int> pontos;
@@ -98,10 +98,10 @@ void regrasDePontuacao::expandeQualis(vector<regrasDePontuacao> vetorRegras, int
     for (int i = 0; i<8 ; i++)
         pontos.push_back(-1);
     
-    for (int i = 0; i < vetorRegras.size(); i++) {
+    for (int i = 0; i < mapaRegras.size(); i++) {
 
         
-        time_t anoRegra = vetorRegras[i].dataInicio;
+        time_t anoRegra = mapaRegras[i].dataInicio;
         
         vector<string> data_formatada;
         Tokenizer token(formatDate(anoRegra, "%d/%m/%Y"), '/');
@@ -111,10 +111,10 @@ void regrasDePontuacao::expandeQualis(vector<regrasDePontuacao> vetorRegras, int
         
 
         if (anoDaRegra == ano) {
-            for (int k = 0; k < vetorRegras[i].getQualis().size(); k++) {
+            for (int k = 0; k < mapaRegras[i].getQualis().size(); k++) {
                 for (int j = 0; j < qualis.size(); j++) {
-                    if (vetorRegras[i].getQualis()[k].compare(qualis[j]) == 0) {
-                        pontos[j] = vetorRegras[i].getPontos()[k];
+                    if (mapaRegras[i].getQualis()[k].compare(qualis[j]) == 0) {
+                        pontos[j] = mapaRegras[i].getPontos()[k];
                         break;
                     }
                 }
@@ -126,8 +126,8 @@ void regrasDePontuacao::expandeQualis(vector<regrasDePontuacao> vetorRegras, int
                 pontos[x + 1] = pontos[x];
         
 
-        vetorRegras[i].setQualis(qualis); 
-        vetorRegras[i].setPontos(pontos);
+        mapaRegras[i].setQualis(qualis); 
+        mapaRegras[i].setPontos(pontos);
             
         
     }

@@ -47,42 +47,42 @@ estatisticasPublicacoes::estatisticasPublicacoes() {
 
 }
 
-void estatisticasPublicacoes::contaNumeroArtigosPorQualis(vector<publicacoes> vetorPublicacoes,
-        vector<qualificacoes> vetorQualificacoes) {
+void estatisticasPublicacoes::contaNumeroArtigosPorQualis(map<int,publicacoes> mapaPublicacoes,
+        map<int,qualificacoes> mapaQualificacoes) {
         
-    for (int i = 0; i < vetorPublicacoes.size(); i++) {
+    for (int i = 0; i < mapaPublicacoes.size(); i++) {
     OUTER:
-        for (int j = 0; j < vetorQualificacoes.size(); j++) {
-            if (stringCompare(vetorPublicacoes[i].getSiglaVeiculo(),vetorQualificacoes[j].getSiglaVeiculo()) == 0) {
-                if (vetorQualificacoes[j].getQualis().compare("A1") == 0) {
+        for (int j = 0; j < mapaQualificacoes.size(); j++) {
+            if (stringCompare(mapaPublicacoes[i].getSiglaVeiculo(),mapaQualificacoes[j].getSiglaVeiculo()) == 0) {
+                if (mapaQualificacoes[j].getQualis().compare("A1") == 0) {
                     estatisticasPublicacoes::numeroArtigos[0]++;
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("A2") == 0) {
+                if (mapaQualificacoes[j].getQualis().compare("A2") == 0) {
                     estatisticasPublicacoes::numeroArtigos[1]++;
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B1") == 0) {
+                if (mapaQualificacoes[j].getQualis().compare("B1") == 0) {
                     estatisticasPublicacoes::numeroArtigos[2]++;
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B2") == 0) {
+                if (mapaQualificacoes[j].getQualis().compare("B2") == 0) {
                     estatisticasPublicacoes::numeroArtigos[3]++;
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B3") == 0) {
+                if (mapaQualificacoes[j].getQualis().compare("B3") == 0) {
                     estatisticasPublicacoes::numeroArtigos[4]++;
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B4") == 0) {
+                if (mapaQualificacoes[j].getQualis().compare("B4") == 0) {
                     estatisticasPublicacoes::numeroArtigos[5]++;
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B5") == 0) {
+                if (mapaQualificacoes[j].getQualis().compare("B5") == 0) {
                     estatisticasPublicacoes::numeroArtigos[6]++;
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("C") == 0) {
+                if (mapaQualificacoes[j].getQualis().compare("C") == 0) {
                     estatisticasPublicacoes::numeroArtigos[7]++;
                     goto OUTER;
                 } else
@@ -95,43 +95,43 @@ void estatisticasPublicacoes::contaNumeroArtigosPorQualis(vector<publicacoes> ve
         cout << estatisticasPublicacoes::numeroArtigos[i] << endl;
 }
 
-void estatisticasPublicacoes::contaNumeroArtigosPorDocentes(vector<publicacoes> vetorPublicacoes,
-        vector<qualificacoes> vetorQualificacoes) {
+void estatisticasPublicacoes::contaNumeroArtigosPorDocentes(map<int, publicacoes> mapaPublicacoes,
+        map<int, qualificacoes> mapaQualificacoes) {
     
-    for (int i = 0; i < vetorPublicacoes.size(); i++) {
+    for (int i = 0; i < mapaPublicacoes.size(); i++) {
         OUTER:
-        for (int j = 0; j < vetorQualificacoes.size(); j++) {
-            if (stringCompare(vetorPublicacoes[i].getSiglaVeiculo(),vetorQualificacoes[j].getSiglaVeiculo()) == 0) {
-                if (vetorQualificacoes[j].getQualis().compare("A1") == 0) {
-                    estatisticasPublicacoes::numeroArtigosPorDocente[0] += 1.0 / vetorPublicacoes[i].getAutores().size();
+        for (int j = 0; j < mapaQualificacoes.size(); j++) {
+            if (stringCompare(mapaPublicacoes[i].getSiglaVeiculo(),mapaQualificacoes[j].getSiglaVeiculo()) == 0) {
+                if (mapaQualificacoes[j].getQualis().compare("A1") == 0) {
+                    estatisticasPublicacoes::numeroArtigosPorDocente[0] += 1.0 / mapaPublicacoes[i].getAutores().size();
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("A2") == 0) {
-                    estatisticasPublicacoes::numeroArtigosPorDocente[1] += 1.0 / vetorPublicacoes[i].getAutores().size();
+                if (mapaQualificacoes[j].getQualis().compare("A2") == 0) {
+                    estatisticasPublicacoes::numeroArtigosPorDocente[1] += 1.0 / mapaPublicacoes[i].getAutores().size();
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B1") == 0) {
-                    estatisticasPublicacoes::numeroArtigosPorDocente[2] += 1.0 / vetorPublicacoes[i].getAutores().size();
+                if (mapaQualificacoes[j].getQualis().compare("B1") == 0) {
+                    estatisticasPublicacoes::numeroArtigosPorDocente[2] += 1.0 / mapaPublicacoes[i].getAutores().size();
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B2") == 0) {
-                    estatisticasPublicacoes::numeroArtigosPorDocente[3] += 1.0 / vetorPublicacoes[i].getAutores().size();
+                if (mapaQualificacoes[j].getQualis().compare("B2") == 0) {
+                    estatisticasPublicacoes::numeroArtigosPorDocente[3] += 1.0 / mapaPublicacoes[i].getAutores().size();
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B3") == 0) {
-                    estatisticasPublicacoes::numeroArtigosPorDocente[4] += 1.0 / vetorPublicacoes[i].getAutores().size();
+                if (mapaQualificacoes[j].getQualis().compare("B3") == 0) {
+                    estatisticasPublicacoes::numeroArtigosPorDocente[4] += 1.0 / mapaPublicacoes[i].getAutores().size();
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B4") == 0) {
-                    estatisticasPublicacoes::numeroArtigosPorDocente[5] += 1.0 / vetorPublicacoes[i].getAutores().size();
+                if (mapaQualificacoes[j].getQualis().compare("B4") == 0) {
+                    estatisticasPublicacoes::numeroArtigosPorDocente[5] += 1.0 / mapaPublicacoes[i].getAutores().size();
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("B5") == 0) {
-                    estatisticasPublicacoes::numeroArtigosPorDocente[6] += 1.0 / vetorPublicacoes[i].getAutores().size();
+                if (mapaQualificacoes[j].getQualis().compare("B5") == 0) {
+                    estatisticasPublicacoes::numeroArtigosPorDocente[6] += 1.0 / mapaPublicacoes[i].getAutores().size();
                     goto OUTER;
                 }
-                if (vetorQualificacoes[j].getQualis().compare("C") == 0) {
-                    estatisticasPublicacoes::numeroArtigosPorDocente[7] += 1.0 / vetorPublicacoes[i].getAutores().size();
+                if (mapaQualificacoes[j].getQualis().compare("C") == 0) {
+                    estatisticasPublicacoes::numeroArtigosPorDocente[7] += 1.0 / mapaPublicacoes[i].getAutores().size();
                     goto OUTER;
                 } else
                     break;

@@ -27,15 +27,15 @@ using namespace cpp_util;
 planilhaRegrasDePontuacao::planilhaRegrasDePontuacao() {
 }
 
-vector<regrasDePontuacao> planilhaRegrasDePontuacao::getListaRegras(){
-    return vetorRegras;
+map<int,regrasDePontuacao> planilhaRegrasDePontuacao::getListaRegras(){
+    return mapaRegras;
 }
 
-void planilhaRegrasDePontuacao::setListaRegras(vector<regrasDePontuacao> vetorRegras){
-    this->vetorRegras = vetorRegras;
+void planilhaRegrasDePontuacao::setListaRegras(map<int,regrasDePontuacao> mapaRegras){
+    this->mapaRegras = mapaRegras;
 }
 
-vector<regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
+map<int,regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
     int tiraTitulo = 0;
     vector<string> args(argv, argv + argc );
     
@@ -47,11 +47,11 @@ vector<regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
             if (file.is_open()){
                 
                 string linha;
-                
+                int k = 0;
                 while (! file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        cout << linha << endl;
+                        //cout << linha << endl;
                         tiraTitulo++;
                         
                         continue;
@@ -60,7 +60,7 @@ vector<regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
 
                     
                     getline(file, linha);
-                    cout << linha << endl;
+                    //cout << linha << endl;
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -127,7 +127,7 @@ vector<regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
                     regra.setQuantidadeAnosConsiderar(anos2);
 
                     //Insere o docente na lista de docentes
-                    vetorRegras.push_back(regra);
+                    mapaRegras[k] = regra;
 
                 }
             }
@@ -136,9 +136,9 @@ vector<regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
     }
 
         //codigoRepetidoParaDocente(vetorDocentes);
-        return vetorRegras;
+        return mapaRegras;
 }
 
-void planilhaRegrasDePontuacao::qualisDesconhecidoParaRegras(vector<regrasDePontuacao> vetorRegras){
+void planilhaRegrasDePontuacao::qualisDesconhecidoParaRegras(map<int,regrasDePontuacao> mapaRegras){
     
 }

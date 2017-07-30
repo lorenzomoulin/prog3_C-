@@ -17,18 +17,20 @@
 #include <vector>
 #include "publicacoes.h"
 #include "docentes.h"
+#include <map>
+
 using namespace std;
 
 namespace trabalho{
 class planilhaPublicacoes {
-    vector<publicacoes> vetorPublicacoes;
+    map<int,publicacoes> mapaPublicacoes;
 public:
     planilhaPublicacoes();
-    vector<publicacoes> getListaPublicacoes();
-    void setListaPublicacoes(vector<publicacoes> vetorPublicacoes);
-    vector<publicacoes> ler(int argc, char ** argv, vector <docentes> vetorDocentes);
-    void codigoDocenteNaoEspecificado(vector<publicacoes> vetorPublicacoes,
-            vector<docentes> listaDocentes);
+    map<int,publicacoes> getListaPublicacoes();
+    void setListaPublicacoes(map<int,publicacoes> mapaPublicacoes);
+    map<int,publicacoes> ler(int argc, char ** argv, map<int,docentes> mapaDocentes);
+    void codigoDocenteNaoEspecificado(map<int,publicacoes> mapaPublicacoes,
+            map<int,docentes> mapaDocentes);
 private:
 
 };

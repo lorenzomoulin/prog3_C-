@@ -18,6 +18,7 @@
 #include "publicacoes.h"
 #include "qualificacoes.h"
 
+
 using namespace std;
 
 namespace trabalho{
@@ -28,10 +29,9 @@ class estatisticasPublicacoes {
 public:
     
     estatisticasPublicacoes();
-    static void contaNumeroArtigosPorQualis(vector<publicacoes> vetorPublicacoes,
-            vector<qualificacoes> vetorQualificacoes);
-    static void contaNumeroArtigosPorDocentes(vector<publicacoes> vetorPublicacoes,
-            vector<qualificacoes> vetorQualificacoes);
+    static void contaNumeroArtigosPorQualis(map<int,publicacoes>,
+            map<int, qualificacoes>);
+    static void contaNumeroArtigosPorDocentes(map<int,publicacoes>, map<int, qualificacoes>);
     static void criaArquivoEstatisticas();
 private:
 

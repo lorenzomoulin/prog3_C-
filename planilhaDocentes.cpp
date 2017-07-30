@@ -26,15 +26,15 @@ using namespace std;
 planilhaDocentes::planilhaDocentes() {
 }
 
-vector<docentes> planilhaDocentes::getListaDocentes(){
-    return vetorDocentes;
+map<int,docentes> planilhaDocentes::getListaDocentes(){
+    return mapaDocentes;
 }
 
-void planilhaDocentes::setListaDocentes(vector<docentes> vetorDocentes){
-    this->vetorDocentes = vetorDocentes;
+void planilhaDocentes::setListaDocentes(map<int,docentes> mapaDocentes){
+    this->mapaDocentes = mapaDocentes;
 }
 
-vector<docentes> planilhaDocentes::ler(char **argv, int argc){
+map<int,docentes> planilhaDocentes::ler(char **argv, int argc){
     int tiraTitulo = 0;
     vector<string> args(argv, argv + argc );
     
@@ -50,16 +50,16 @@ vector<docentes> planilhaDocentes::ler(char **argv, int argc){
                 while (! file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        cout << linha << endl;
+                        //cout << linha << endl;
                         tiraTitulo++;
-                        j++;
+                        
                         continue;
                     }
                     docentes docente;
 
                     //Lê a linha inteira e divide em um vetor de 5 posicoes
                     getline(file, linha);
-                    cout << linha << endl;
+                    //cout << linha << endl;
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -118,8 +118,8 @@ vector<docentes> planilhaDocentes::ler(char **argv, int argc){
                     
 
                     //Insere o docente na lista de docentes
-                    vetorDocentes.push_back(docente);
-
+                    mapaDocentes[j] = docente;
+                    j++;
                 }
             }
             file.close();
@@ -141,9 +141,9 @@ vector<docentes> planilhaDocentes::ler(char **argv, int argc){
     }*/
 
         //codigoRepetidoParaDocente(vetorDocentes);
-        return vetorDocentes;
+        return mapaDocentes;
 }
 
-void planilhaDocentes::codigoRepetidoParaDocente(vector<docentes> listaDocentes){
+void planilhaDocentes::codigoRepetidoParaDocente(map<int,docentes> mapaDocentes){
     
 }

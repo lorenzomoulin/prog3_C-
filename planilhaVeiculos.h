@@ -17,21 +17,20 @@
 #include "veiculos.h"
 #include "publicacoes.h"
 #include "qualificacoes.h"
+#include <map>
 
 
 namespace trabalho{
 class planilhaVeiculos {
-    vector<veiculos> vetorVeiculos;
+    map<int, veiculos> mapaVeiculos;
 public:
     planilhaVeiculos();
-    vector<veiculos> getListaVeiculos();
-    void setListaVeiculos(vector<veiculos> vetorVeiculos);
-    vector<veiculos> ler(int argc,char ** argv, vector<qualificacoes> vetorQualis, vector<publicacoes> vetorPublicacoes);
-    void siglaVeiculoRepetida(vector<veiculos> vetorVeiculos);
-    void siglaNaoDefinidaNaQualis(vector<qualificacoes> vectorQualis,
-            vector<veiculos> vectorVeiculos);
-    void siglaNaoDefinidaNaPubli(vector<publicacoes> vectorPublicacoes,
-            vector<veiculos> vectorVeiculos);
+    map<int, veiculos> getListaVeiculos();
+    void setListaVeiculos(map<int, veiculos> mapaVeiculos);
+    map<int, veiculos> ler(int argc,char ** argv, map<int,qualificacoes> , map<int,publicacoes> );
+    void siglaVeiculoRepetida(map<int, veiculos> mapaVeiculos);
+    void siglaNaoDefinidaNaQualis(map<int,qualificacoes>, map<int, veiculos>);
+    void siglaNaoDefinidaNaPubli(map<int,publicacoes>, map<int, veiculos>);
     
 private:
 

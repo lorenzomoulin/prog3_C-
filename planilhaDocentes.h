@@ -14,7 +14,7 @@
 #ifndef PLANILHADOCENTES_H
 #define PLANILHADOCENTES_H
 
-#include <vector>
+#include <map>
 #include <string>
 #include <iostream>
 #include "DateUtils.h"
@@ -24,13 +24,13 @@ using namespace std;
 
 namespace trabalho{
 class planilhaDocentes {
-    vector<docentes> vetorDocentes;
+    map<int,docentes> mapaDocentes;
 public:
     planilhaDocentes();
-    vector<docentes> getListaDocentes();
-    void setListaDocentes(vector<docentes> vetorDocentes);
-    vector<docentes> ler(char** args, int argc);
-    void codigoRepetidoParaDocente(vector<docentes> listaDocentes);
+    map<int,docentes> getListaDocentes();
+    void setListaDocentes(map<int,docentes> mapaDocentes);
+    map<int,docentes> ler(char** args, int argc);
+    void codigoRepetidoParaDocente(map<int,docentes> mapaDocentes);
     
 private:
 
