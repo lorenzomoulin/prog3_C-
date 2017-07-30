@@ -45,7 +45,7 @@ vector<veiculos> planilhaVeiculos::ler(int argc, char ** argv, vector<qualificac
             while (!file.eof()) {
                 if (tiraTitulo == 0) {
                     getline(file, linha);
-
+                    cout << linha << endl;
                     tiraTitulo++;
                     j++;
                     continue;
@@ -71,8 +71,11 @@ vector<veiculos> planilhaVeiculos::ler(int argc, char ** argv, vector<qualificac
                 string nome = trim(linhaDividida[1]);
                 string tipo = trim(linhaDividida[2]);
                 string fatorImpacto = trim(linhaDividida[3]);
-                string issn = trim(linhaDividida[4]);
-
+                string issn;
+                if (linhaDividida.size()==5)
+                    issn = trim(linhaDividida[4]);
+                else 
+                    issn = ""; 
                 // Converte as variaveis para os tipos necessarios
                 locale LOCALE_PT_BR(locale(), new NumPunctPTBR());
                 double fatorImpacto2 = parseDouble(fatorImpacto,LOCALE_PT_BR);
@@ -91,9 +94,9 @@ vector<veiculos> planilhaVeiculos::ler(int argc, char ** argv, vector<qualificac
 
                 // Insere o veiculo na lista de veiculos
                 vetorVeiculos.push_back(veiculo);
-
+                cout << vetorVeiculos.size() << endl;
             }
-
+            file.close();
         }
     }
 
@@ -105,6 +108,7 @@ vector<veiculos> planilhaVeiculos::ler(int argc, char ** argv, vector<qualificac
 }
 
 void planilhaVeiculos::siglaVeiculoRepetida(vector<veiculos> vetorVeiculos) {
+    
 }
 
 void planilhaVeiculos::siglaNaoDefinidaNaQualis(vector<qualificacoes> vectorQualis,

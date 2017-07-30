@@ -54,7 +54,7 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                 while (! file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        
+                        cout << linha << endl;
                         tiraTitulo++;
                         
                         continue;
@@ -62,7 +62,7 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                     publicacoes publicacao;
 
                     getline(file, linha);
-                    
+                    cout << linha << endl;
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -82,6 +82,7 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                     
                     if (linhaDividida.size()==0)
                         break;
+                    
                     //Atribui as strings separadas para cada variavel
                     string ano = trim(linhaDividida[0]);
                     string siglaVeiculo = trim(linhaDividida[1]);
@@ -102,9 +103,9 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                     
                     int ano2 = atoi(ano.c_str());
                     int volumePeriodico2 = 0;
-                    if (!volumePeriodico.compare("")) {
+                    if (volumePeriodico.compare("")) 
                         volumePeriodico2 = atoi(volumePeriodico.c_str());
-                    }
+                    
                     int numero2 = atoi(numero.c_str());
                     int paginaInicial2 = atoi(paginaInicial.c_str());
                     int paginaFinal2 = atoi(paginaFinal.c_str());
@@ -122,15 +123,16 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                     vector <long> vetorAutores2;
                     
                     for (int j = 0; j < vetorAutores.size(); j++) {
-                        if (!vetorAutores[j].compare(""))
-                            vetorAutores2[j] = atol(vetorAutores[j].c_str());
+                        if (vetorAutores[j].compare(""))
+                            vetorAutores2.push_back(atol(vetorAutores[j].c_str()));
+                        
                         
                     }
 
 
                     //Insere infos na publicacao
                     
-                    if (!volumePeriodico.compare("")) {
+                    if (volumePeriodico.compare("")) {
                         periodicos periodico;
                         periodico.setAno(ano2);
                         periodico.setAutores(vetorAutores2);
@@ -140,10 +142,11 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                         periodico.setSiglaVeiculo(siglaVeiculo);
                         periodico.setTitulo(titulo);
                         periodico.setVolume(volumePeriodico2);
+                        cout << periodico.getVolume() << endl;
                         vetorPublicacoes.push_back(periodico);
                     
                     }//Insere infos na conferencia
-                    else if (!localConferencia.compare("")) {
+                    else if (localConferencia.compare("")) {
                         conferencias conferencia;
                         conferencia.setAno(ano2);
                         conferencia.setAutores(vetorAutores2);
@@ -153,6 +156,7 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
                         conferencia.setSiglaVeiculo(siglaVeiculo);
                         conferencia.setTitulo(titulo);
                         conferencia.setLocal(localConferencia);
+                        cout << conferencia.getLocal() << endl;
                         vetorPublicacoes.push_back(conferencia);
 
                     }
@@ -162,10 +166,27 @@ vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docen
 
                 }
             }
-        
+            file.close();
         }
         codigoDocenteNaoEspecificado(vetorPublicacoes, vetorDocentes);
     }
+    /*for (int c = 0 ; c < vetorPublicacoes.size() ; c++){
+        
+        cout <<  vetorPublicacoes[c].getAno() << ";";
+        cout <<  vetorPublicacoes[c].getSiglaVeiculo() << ";";
+        
+        cout << vetorPublicacoes[c].getTitulo() << ";" ;
+        
+        for (int d = 0 ; d < vetorPublicacoes[c].getAutores().size() ;  d++)
+            cout <<  vetorPublicacoes[c].getAutores()[d] << "," ;
+            
+        cout <<  vetorPublicacoes[c].getNumero() << ";";
+        
+        cout <<  vetorPublicacoes[c].getPaginaInicial() << ";";
+        cout <<  vetorPublicacoes[c].getPaginaFinal() << endl;
+        
+        
+    }*/
 
     //codigoRepetidoParaDocente(vetorDocentes);
     return vetorPublicacoes;

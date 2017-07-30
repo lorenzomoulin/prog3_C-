@@ -35,9 +35,13 @@ namespace trabalho {
             
             
             long getCodigo();
+            
             bool getEhCoordenador();
+            
             string getNome();
+            
             time_t getDataNascimento();       
+            
             time_t getDataIngresso(); 
             
             void setNome(string nome);
@@ -47,6 +51,7 @@ namespace trabalho {
             void setDataIngresso(time_t dataIngresso);
             
             void setCodigo(long codigo);
+            
             void setEhCoordenador(bool EhCoordenador);
             
             //bool entrouMenosDe3Anos(RegrasDePontuacao regra);

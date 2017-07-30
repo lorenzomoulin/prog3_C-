@@ -50,7 +50,7 @@ vector<qualificacoes> planilhaQualificacoes::ler(int argc, char** argv){
                 
                 string linha;
                 
-                while (! file.eof()) {
+                 while (!file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
                         cout << linha << endl;
@@ -99,13 +99,16 @@ vector<qualificacoes> planilhaQualificacoes::ler(int argc, char** argv){
 
                     //Insere o docente na lista de docentes
                     vetorQualificacoes.push_back(qualificacao);
+                    
 
                 }
+                cout << "oi" ;
             }
-        
+            file.close();
         }
     }
-
+    
+    //cout << "oi";
         //codigoRepetidoParaDocente(vetorDocentes);
         return vetorQualificacoes;
 }
