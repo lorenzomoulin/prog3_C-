@@ -22,16 +22,17 @@ using namespace std;
 
 namespace trabalho{
 class estatisticasPublicacoes {
-    vector<string> qualis;
-    vector<int> numeroArtigos;
-    vector<double> numeroArtigosPorDocente;
+    static vector<string> qualis;
+    static vector<int> numeroArtigos;
+    static vector<double> numeroArtigosPorDocente;
 public:
+    
     estatisticasPublicacoes();
-    void contaNumeroArtigosPorQualis(vector<publicacoes> vetorPublicacoes,
+    static void contaNumeroArtigosPorQualis(vector<publicacoes> vetorPublicacoes,
             vector<qualificacoes> vetorQualificacoes);
-    void contaNumeroArtigosPorDocentes(vector<publicacoes> vetorPublicacoes,
+    static void contaNumeroArtigosPorDocentes(vector<publicacoes> vetorPublicacoes,
             vector<qualificacoes> vetorQualificacoes);
-    void criaArquivoEstatisticas();
+    static void criaArquivoEstatisticas();
 private:
 
 };

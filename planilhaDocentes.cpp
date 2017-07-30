@@ -50,7 +50,7 @@ vector<docentes> planilhaDocentes::ler(char **argv, int argc){
                 while (! file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        
+                        cout << linha << endl;
                         tiraTitulo++;
                         j++;
                         continue;
@@ -59,7 +59,7 @@ vector<docentes> planilhaDocentes::ler(char **argv, int argc){
 
                     //Lê a linha inteira e divide em um vetor de 5 posicoes
                     getline(file, linha);
-                    
+                    cout << linha << endl;
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -122,9 +122,23 @@ vector<docentes> planilhaDocentes::ler(char **argv, int argc){
 
                 }
             }
-        
+            file.close();
         }
     }
+    //for da sorte, vai dar certo, só confia
+    /*for (int c = 0 ; c < vetorDocentes.size() ; c++){
+        
+        cout <<  vetorDocentes[c].getCodigo() << ";";
+        cout <<  vetorDocentes[c].getNome() << ";";
+        
+        cout << formatDate(vetorDocentes[c].getDataNascimento(),"%d/%m/%Y") << ";" ;
+        cout <<  formatDate(vetorDocentes[c].getDataIngresso(),"%d/%m/%Y") << ";" ;
+        if (vetorDocentes[c].getEhCoordenador())
+            cout <<  vetorDocentes[c].getEhCoordenador() << endl ;
+        else 
+            cout << endl;
+        
+    }*/
 
         //codigoRepetidoParaDocente(vetorDocentes);
         return vetorDocentes;

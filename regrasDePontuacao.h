@@ -58,7 +58,7 @@ public:
 
     void setPontuacaoMinimaRecredenciamento(int pontuacaoMinimaRecredenciamento);
     
-    void expandeQualis(vector<regrasDePontuacao> vetorRegras, int ano);
+    static void expandeQualis(vector<regrasDePontuacao> vetorRegras, int ano);
     
 private:
 

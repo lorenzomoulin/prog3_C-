@@ -51,7 +51,7 @@ vector<regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
                 while (! file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        //cout << linha << endl;
+                        cout << linha << endl;
                         tiraTitulo++;
                         
                         continue;
@@ -60,7 +60,7 @@ vector<regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
 
                     
                     getline(file, linha);
-                    //cout << linha << endl;
+                    cout << linha << endl;
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -131,7 +131,7 @@ vector<regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
 
                 }
             }
-        
+            file.close();
         }
     }
 

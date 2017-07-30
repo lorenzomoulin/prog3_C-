@@ -15,32 +15,65 @@
 #include "planilhaDocentes.h"
 #include "docentes.h"
 #include <vector>
+#include <valarray>
 #include "planilhaPublicacoes.h"
 #include "planilhaQualificacoes.h"
 #include "planilhaRegrasDePontuacao.h"
+#include "planilhaVeiculos.h"
+#include "estatisticasPublicacoes.h"
+#include "regrasDePontuacao.h"
 
 
 using namespace std;
 using namespace trabalho;
 
+
 /*
  * 
  */
 int main(int argc, char** argv) {
-    planilhaDocentes pd; 
+    
+    planilhaQualificacoes pq;   
+    vector<qualificacoes> vetorQualificacoes = pq.ler(argc, argv);
+
+    planilhaDocentes pd;
     vector<docentes> vetorDocentes = pd.ler(argv, argc);
-    
+
     planilhaPublicacoes pp;
-    vector<publicacoes> vetorPublicacoes = pp.ler(argc,argv, vetorDocentes);
-    
-    planilhaQualificacoes pq;
-    vector<qualificacoes> vetorQualificacoes = pq.ler(argc,argv);
-    
+    vector<publicacoes> vetorPublicacoes = pp.ler(argc, argv, vetorDocentes);    
+
     planilhaRegrasDePontuacao pr;
     vector<regrasDePontuacao> vetorRegras = pr.ler(argc, argv);
+
+    planilhaVeiculos pv;
+    vector<veiculos> vetorVeiculos = pv.ler(argc, argv, vetorQualificacoes, vetorPublicacoes);
+    cout << "qwertyuiopasdfghjklçzxcvbnm";
+    int ano = 0;
+
+    // PROCURA ANO DE RECREDENCIAMENTO
+    //converte argv para string
+
+    vector<string> args(argv, argv + argc);
+
+    for (int i = 0; i < argc; i++)
+        if (args[i].compare("-a") == 0)
+            ano = atoi(args[i + 1].c_str());
+
+    // PARA ATRIBUIR QUALIS A SEUS RESPECTIVOS PONTOS DADO UM ANO
+    
+    regrasDePontuacao::expandeQualis(vetorRegras, ano);
     
     
+    // PARA O RELATORIO DE ESTATISTICAS
+    static estatisticasPublicacoes est;
     
+    
+    est.contaNumeroArtigosPorQualis(vetorPublicacoes, vetorQualificacoes);
+    est.contaNumeroArtigosPorDocentes(vetorPublicacoes, vetorQualificacoes);
+    est.criaArquivoEstatisticas();
+
+
+
     return 0;
 }
 
@@ -68,7 +101,7 @@ import java.util.List;
 public class Main {
 
     /**
-     * @param args the command line arguments
+ * @param args the command line arguments
      
     public static void main(String[] args) {
         try {
@@ -134,4 +167,4 @@ public class Main {
         }
     }
 }
-*/
+ */
