@@ -18,20 +18,17 @@
 #include "publicacoes.h"
 #include "qualificacoes.h"
 
-
 using namespace std;
 
 namespace trabalho{
 class estatisticasPublicacoes {
-    static vector<string> qualis;
     static vector<int> numeroArtigos;
+    static vector <string> qualis;
     static vector<double> numeroArtigosPorDocente;
 public:
     
     estatisticasPublicacoes();
-    static void contaNumeroArtigosPorQualis(map<int,publicacoes>,
-            map<int, qualificacoes>);
-    static void contaNumeroArtigosPorDocentes(map<int,publicacoes>, map<int, qualificacoes>);
+    static void contaNumeroArtigosPorDocentes(vector<publicacoes> vetorPublicacoes);
     static void criaArquivoEstatisticas();
 private:
 

@@ -17,6 +17,7 @@
 #include <iostream>
 #include <string>
 #include "DateUtils.h"
+#include "regrasDePontuacao.h"
 
 
 using namespace std;
@@ -29,10 +30,14 @@ namespace trabalho {
         time_t dataIngresso;
         bool EhCoordenador;
         long codigo;
+        double pontuacao;
         
         public:
             docentes();
             
+            double getPontuacao();
+            
+            void setPontuacao(double);
             
             long getCodigo();
             
@@ -44,20 +49,20 @@ namespace trabalho {
             
             time_t getDataIngresso(); 
             
-            void setNome(string nome);
+            void setNome(string);
 
-            void setDataNascimento(time_t dataNascimento);
+            void setDataNascimento(time_t);
 
-            void setDataIngresso(time_t dataIngresso);
+            void setDataIngresso(time_t);
             
-            void setCodigo(long codigo);
+            void setCodigo(long);
             
-            void setEhCoordenador(bool EhCoordenador);
+            void setEhCoordenador(bool);
             
-            //bool entrouMenosDe3Anos(RegrasDePontuacao regra);
-            //bool temMaisDe60Anos(RegrasDePontuacao regra);
+            bool entrouMenosDe3Anos(regrasDePontuacao);
             
-            
+            bool temMaisDe60Anos(regrasDePontuacao);
+                       
         private:
 
             

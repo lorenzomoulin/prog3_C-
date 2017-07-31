@@ -14,7 +14,6 @@
 #ifndef REGRASDEPONTUACAO_H
 #define REGRASDEPONTUACAO_H
 #include <vector>
-#include <map>
 #include <string>
 
 using namespace std;
@@ -59,7 +58,7 @@ public:
 
     void setPontuacaoMinimaRecredenciamento(int pontuacaoMinimaRecredenciamento);
     
-    static void expandeQualis(map<int,regrasDePontuacao> mapaRegras, int ano);
+    static void expandeQualis(vector<regrasDePontuacao>& vetorRegras, int ano);
     
 private:
 

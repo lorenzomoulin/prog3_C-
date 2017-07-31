@@ -20,6 +20,8 @@
 #include "publicacoes.h"
 #include "periodicos.h"
 #include "conferencias.h"
+#include "veiculos.h"
+#include "geraPublicacoes.h"
 
 using namespace cpp_util;
 using namespace trabalho;
@@ -30,15 +32,15 @@ planilhaPublicacoes::planilhaPublicacoes() {
     
 }
 
-map<int,publicacoes> planilhaPublicacoes::getListaPublicacoes(){
-    return mapaPublicacoes;
+vector<publicacoes> planilhaPublicacoes::getListaPublicacoes(){
+    return vetorPublicacoes;
 }
 
-void planilhaPublicacoes::setListaPublicacoes(map<int,publicacoes> mapaPublicacoes){
-    this->mapaPublicacoes = mapaPublicacoes;
+void planilhaPublicacoes::setListaPublicacoes(vector<publicacoes> vetorPublicacoes){
+    this->vetorPublicacoes = vetorPublicacoes;
 }
 
-map<int,publicacoes> planilhaPublicacoes::ler(int argc, char** argv, map<int,docentes> mapaDocentes){
+vector<publicacoes> planilhaPublicacoes::ler(int argc, char** argv, vector<docentes> vetorDocentes, vector<veiculos> vetorVeiculos){
     int tiraTitulo = 0;
     vector<string> args(argv, argv + argc );
     
@@ -50,11 +52,11 @@ map<int,publicacoes> planilhaPublicacoes::ler(int argc, char** argv, map<int,doc
             if (file.is_open()){
                 
                 string linha;
-                int k = 0;
+                
                 while (! file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        //cout << linha << endl;
+                        
                         tiraTitulo++;
                         
                         continue;
@@ -62,7 +64,6 @@ map<int,publicacoes> planilhaPublicacoes::ler(int argc, char** argv, map<int,doc
                     publicacoes publicacao;
 
                     getline(file, linha);
-                    //cout << linha << endl;
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -72,13 +73,6 @@ map<int,publicacoes> planilhaPublicacoes::ler(int argc, char** argv, map<int,doc
                     //Lê a linha inteira e divide em um vetor de 9 posicoes
                     while(getline(f,temp,';')) 
                         linhaDividida.push_back(temp);
-                    
-                    /*cout << linhaDividida[0] << endl;
-                    cout << linhaDividida[1] << endl;
-                    cout << linhaDividida[2] << endl;
-                    cout << linhaDividida[3] << endl;
-                    //cout << linhaDividida[4] << endl;*/
-                    //cout << linhaDividida.size() <<"<<<<<<<<<"<< endl;
                     
                     if (linhaDividida.size()==0)
                         break;
@@ -93,11 +87,6 @@ map<int,publicacoes> planilhaPublicacoes::ler(int argc, char** argv, map<int,doc
                     string localConferencia = trim(linhaDividida[6]);
                     string paginaInicial = trim(linhaDividida[7]);
                     string paginaFinal = trim(linhaDividida[8]);
-                    
-                    
-                    
-
-                    
 
                     //Converte as variaveis para os tipos necessarios
                     
@@ -125,73 +114,78 @@ map<int,publicacoes> planilhaPublicacoes::ler(int argc, char** argv, map<int,doc
                     for (int j = 0; j < vetorAutores.size(); j++) {
                         if (vetorAutores[j].compare(""))
                             vetorAutores2.push_back(atol(vetorAutores[j].c_str()));
-                        
-                        
                     }
-
-
+                    
+                    veiculos veiculo;
+                    for (int c = 0; c < vetorVeiculos.size() ; c++){
+                        if (!vetorVeiculos[c].getSigla().compare(siglaVeiculo)){
+                            veiculo = vetorVeiculos[c];
+                        }
+                    }
+                    vector<docentes> docente;
+                    for (int c = 0; c < vetorAutores2.size() ; c++){
+                        for(int java = 0; java < vetorDocentes.size() ; java++){
+                            if ( vetorDocentes[java].getCodigo() == vetorAutores2[c]){
+                                docente.push_back(vetorDocentes[java]);
+                            } 
+                        }
+                    }
+                    
+                    geraPublicacoes gera;
+                    
+                    //coloca na primeira posicao da lista de qualis, o qualis mais atual
+                    vector<qualificacoes> vetorQualisSize1;
+                    vetorQualisSize1.push_back(gera.qualisAtual(veiculo.getQualis(),ano2));
+                    veiculo.setQualis(vetorQualisSize1);                   
+                    
                     //Insere infos na publicacao
                     
                     if (volumePeriodico.compare("")) {
-                        periodicos periodico;
+                        periodicos periodico;                       
+                        
                         periodico.setAno(ano2);
-                        periodico.setAutores(vetorAutores2);
+                        periodico.setAutores(docente);
                         periodico.setNumero(numero2);
                         periodico.setPaginaFinal(paginaFinal2);
                         periodico.setPaginaInicial(paginaInicial2);
-                        periodico.setSiglaVeiculo(siglaVeiculo);
                         periodico.setTitulo(titulo);
+                        periodico.setVeiculo(veiculo);
                         periodico.setVolume(volumePeriodico2);
-                        //cout << periodico.getVolume() << endl;
-                        mapaPublicacoes[k] = publicacao;
+                        
+                        vetorPublicacoes.push_back(periodico);
                     
                     }//Insere infos na conferencia
                     else if (localConferencia.compare("")) {
                         conferencias conferencia;
+                        
                         conferencia.setAno(ano2);
-                        conferencia.setAutores(vetorAutores2);
+                        conferencia.setAutores(docente);
                         conferencia.setNumero(numero2);
                         conferencia.setPaginaFinal(paginaFinal2);
                         conferencia.setPaginaInicial(paginaInicial2);
-                        conferencia.setSiglaVeiculo(siglaVeiculo);
                         conferencia.setTitulo(titulo);
+                        conferencia.setVeiculo(veiculo);
                         conferencia.setLocal(localConferencia);
-                        //cout << conferencia.getLocal() << endl;
-                        mapaPublicacoes[k] = conferencia;
+                        
+                        vetorPublicacoes.push_back(conferencia);
 
                     }
-
-                    k++;
                     
+                   
 
+                    
                 }
             }
             file.close();
         }
-        codigoDocenteNaoEspecificado(mapaPublicacoes, mapaDocentes);
+        codigoDocenteNaoEspecificado(vetorPublicacoes, vetorDocentes);
     }
-    /*for (int c = 0 ; c < vetorPublicacoes.size() ; c++){
-        
-        cout <<  vetorPublicacoes[c].getAno() << ";";
-        cout <<  vetorPublicacoes[c].getSiglaVeiculo() << ";";
-        
-        cout << vetorPublicacoes[c].getTitulo() << ";" ;
-        
-        for (int d = 0 ; d < vetorPublicacoes[c].getAutores().size() ;  d++)
-            cout <<  vetorPublicacoes[c].getAutores()[d] << "," ;
-            
-        cout <<  vetorPublicacoes[c].getNumero() << ";";
-        
-        cout <<  vetorPublicacoes[c].getPaginaInicial() << ";";
-        cout <<  vetorPublicacoes[c].getPaginaFinal() << endl;
-        
-        
-    }*/
+    
 
     //codigoRepetidoParaDocente(vetorDocentes);
-    return mapaPublicacoes;
+    return vetorPublicacoes;
 }
 
-void planilhaPublicacoes::codigoDocenteNaoEspecificado(map<int,publicacoes> mapaPublicacoes, map<int,docentes> mapaDocentes){
+void planilhaPublicacoes::codigoDocenteNaoEspecificado(vector<publicacoes> vetorPublicacoes, vector<docentes> listaDocentes){
     
 }

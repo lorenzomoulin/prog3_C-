@@ -27,15 +27,15 @@ using namespace cpp_util;
 planilhaRegrasDePontuacao::planilhaRegrasDePontuacao() {
 }
 
-map<int,regrasDePontuacao> planilhaRegrasDePontuacao::getListaRegras(){
-    return mapaRegras;
+vector<regrasDePontuacao> planilhaRegrasDePontuacao::getListaRegras(){
+    return vetorRegras;
 }
 
-void planilhaRegrasDePontuacao::setListaRegras(map<int,regrasDePontuacao> mapaRegras){
-    this->mapaRegras = mapaRegras;
+void planilhaRegrasDePontuacao::setListaRegras(vector<regrasDePontuacao> vetorRegras){
+    this->vetorRegras = vetorRegras;
 }
 
-map<int,regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
+vector<regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv){
     int tiraTitulo = 0;
     vector<string> args(argv, argv + argc );
     
@@ -47,11 +47,11 @@ map<int,regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv)
             if (file.is_open()){
                 
                 string linha;
-                int k = 0;
+                
                 while (! file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        //cout << linha << endl;
+                        
                         tiraTitulo++;
                         
                         continue;
@@ -60,7 +60,7 @@ map<int,regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv)
 
                     
                     getline(file, linha);
-                    //cout << linha << endl;
+                   
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -70,11 +70,7 @@ map<int,regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv)
                     while(getline(f,temp,';')) 
                         linhaDividida.push_back(temp);
                     
-                    /*cout << linhaDividida[0] << endl;
-                    cout << linhaDividida[1] << endl;
-                    cout << linhaDividida[2] << endl;
-                    cout << linhaDividida[3] << endl;
-                    //cout << linhaDividida[4] << endl;*/
+                    
                     if (linhaDividida.size()==0)
                         break;
                     //Atribui as strings separadas para cada variavel
@@ -127,7 +123,7 @@ map<int,regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv)
                     regra.setQuantidadeAnosConsiderar(anos2);
 
                     //Insere o docente na lista de docentes
-                    mapaRegras[k] = regra;
+                    vetorRegras.push_back(regra);
 
                 }
             }
@@ -136,9 +132,9 @@ map<int,regrasDePontuacao> planilhaRegrasDePontuacao::ler(int argc, char** argv)
     }
 
         //codigoRepetidoParaDocente(vetorDocentes);
-        return mapaRegras;
+        return vetorRegras;
 }
 
-void planilhaRegrasDePontuacao::qualisDesconhecidoParaRegras(map<int,regrasDePontuacao> mapaRegras){
+void planilhaRegrasDePontuacao::qualisDesconhecidoParaRegras(vector<regrasDePontuacao> vetorRegras){
     
 }

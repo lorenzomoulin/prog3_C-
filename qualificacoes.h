@@ -15,7 +15,7 @@
 #define QUALIFICACOES_H
 
 #include <string>
-#include <map>
+#include <vector>
 
 using namespace std;
 
@@ -24,7 +24,7 @@ class qualificacoes {
     int ano;
     string siglaVeiculo;
     string qualis;
-    map<int,qualificacoes> mapaQualificacoes;
+    
 public:
     qualificacoes();
     void setAno(int ano);

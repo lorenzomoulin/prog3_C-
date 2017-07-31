@@ -16,7 +16,8 @@
 
 #include <string>
 #include <vector>
-
+#include "veiculos.h"
+#include "docentes.h"
 
 
 using namespace std;
@@ -29,44 +30,47 @@ class publicacoes {
     int paginaFinal;
     int numero;
 
-    string siglaVeiculo;
-    vector<long> autores;
+    veiculos veiculo;
+    vector<docentes> autores;
 
 public:
     publicacoes();
+    
     int getAno();
 
-    void setAno(int ano);
-
-    string getSiglaVeiculo();
-
-    void setSiglaVeiculo(string siglaVeiculo);
+    void setAno(int);
 
     string getTitulo();
 
-    void setTitulo(string titulo);
+    void setTitulo(string);
 
-    vector<long> getAutores();
+    vector<docentes> getAutores();
     
-    void setAutores(vector<long> autores);
+    void setAutores(vector<docentes>);
 
+    veiculos getVeiculo();
     
+    void setVeiculo(veiculos);
 
     int getNumero();
 
-    void setNumero(int numero);
+    void setNumero(int);
 
     int getPaginaInicial();
 
-    void setPaginaInicial(int paginaInicial);
+    void setPaginaInicial(int);
 
     int getPaginaFinal();
 
-    void setPaginaFinal(int paginaFinal);
+    void setPaginaFinal(int);
+    
+    static bool compareTo(publicacoes,publicacoes);
     
 private:
 
 };
+
+
 }
 #endif /* PUBLICACOES_H */
 

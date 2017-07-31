@@ -80,7 +80,7 @@ void regrasDePontuacao::setPontuacaoMinimaRecredenciamento(int pontuacaoMinimaRe
     this->pontuacaoMinima = pontuacaoMinima;
 }
 
-void regrasDePontuacao::expandeQualis(map<int,regrasDePontuacao> mapaRegras, int ano){
+void regrasDePontuacao::expandeQualis(vector<regrasDePontuacao>& vetorRegras, int ano){
     
     vector<string> qualis;
     vector<int> pontos;
@@ -98,39 +98,36 @@ void regrasDePontuacao::expandeQualis(map<int,regrasDePontuacao> mapaRegras, int
     for (int i = 0; i<8 ; i++)
         pontos.push_back(-1);
     
-    for (int i = 0; i < mapaRegras.size(); i++) {
-
+    //
+    for (int i = 0; i < vetorRegras.size(); i++) {
         
-        time_t anoRegra = mapaRegras[i].dataInicio;
-        
+        //pega o ano da data de inicio fazendo as devidas conversoes
+        time_t dataRegra = vetorRegras[i].dataInicio;        
         vector<string> data_formatada;
-        Tokenizer token(formatDate(anoRegra, "%d/%m/%Y"), '/');
-        
+        Tokenizer token(formatDate(dataRegra, "%d/%m/%Y"), '/');        
         data_formatada = token.remaining();
-        int anoDaRegra = atoi(data_formatada[2].c_str());
-        
+        int anoDaRegra = atoi(data_formatada[2].c_str());        
 
+        //se o ano da regra for o ano de recredenciamento, percorre-se o vetor de qualis dentro da regra
+        //e atribui a pontuacao da regra ao vetor de pontuacao na posicao achada
         if (anoDaRegra == ano) {
-            for (int k = 0; k < mapaRegras[i].getQualis().size(); k++) {
+            for (int k = 0; k < vetorRegras[i].getQualis().size(); k++) {
                 for (int j = 0; j < qualis.size(); j++) {
-                    if (mapaRegras[i].getQualis()[k].compare(qualis[j]) == 0) {
-                        pontos[j] = mapaRegras[i].getPontos()[k];
+                    if (vetorRegras[i].getQualis()[k].compare(qualis[j]) == 0) {
+                        pontos[j] = vetorRegras[i].getPontos()[k];
                         break;
                     }
                 }
             }
         }
 
+        //copia o ponto da posicao que estiver -1 ate antes do ponto diferente de -1
         for (int x = 0; x < (pontos.size() - 1); x++) 
             if (pontos[x + 1] == -1) 
                 pontos[x + 1] = pontos[x];
         
 
-        mapaRegras[i].setQualis(qualis); 
-        mapaRegras[i].setPontos(pontos);
-            
-        
+        vetorRegras[i].setQualis(qualis); 
+        vetorRegras[i].setPontos(pontos);       
     }
-    
-
 }
