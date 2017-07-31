@@ -26,15 +26,15 @@ using namespace std;
 planilhaDocentes::planilhaDocentes() {
 }
 
-map<int,docentes> planilhaDocentes::getListaDocentes(){
-    return mapaDocentes;
+vector<docentes> planilhaDocentes::getListaDocentes(){
+    return vetorDocentes;
 }
 
-void planilhaDocentes::setListaDocentes(map<int,docentes> mapaDocentes){
-    this->mapaDocentes = mapaDocentes;
+void planilhaDocentes::setListaDocentes(vector<docentes> vetorDocentes){
+    this->vetorDocentes = vetorDocentes;
 }
 
-map<int,docentes> planilhaDocentes::ler(char **argv, int argc){
+vector<docentes> planilhaDocentes::ler(char **argv, int argc){
     int tiraTitulo = 0;
     vector<string> args(argv, argv + argc );
     
@@ -50,16 +50,16 @@ map<int,docentes> planilhaDocentes::ler(char **argv, int argc){
                 while (! file.eof()) {
                     if (tiraTitulo == 0) {
                         getline(file, linha);
-                        //cout << linha << endl;
+                       
                         tiraTitulo++;
-                        
+                        j++;
                         continue;
                     }
                     docentes docente;
 
                     //Lê a linha inteira e divide em um vetor de 5 posicoes
                     getline(file, linha);
-                    //cout << linha << endl;
+                    
                     
                     vector<string> linhaDividida;
                     istringstream f(linha);
@@ -68,14 +68,9 @@ map<int,docentes> planilhaDocentes::ler(char **argv, int argc){
                     while(getline(f,temp,';')) 
                         linhaDividida.push_back(temp);
                     
-                    /*cout << linhaDividida[0] << endl;
-                    cout << linhaDividida[1] << endl;
-                    cout << linhaDividida[2] << endl;
-                    cout << linhaDividida[3] << endl;
-                    //cout << linhaDividida[4] << endl;*/
                     
-                    //Atribui as strings separadas para cada variavel
-                    //cout << linhaDividida.size() << "<<<<<<<"<< endl;
+                    
+                    //Atribui as strings separadas para cada variavel                    
                     if (linhaDividida.size()==0)
                         break;
                     string codigo = linhaDividida[0];
@@ -96,17 +91,11 @@ map<int,docentes> planilhaDocentes::ler(char **argv, int argc){
                         if (!ehCoordenador.compare("X")) {
                             ehCoordenador2 = true;
                         }
-                    }
-                    
-                    
+                    }                        
 
                     
-
                     //Converte as variaveis para os tipos necessarios
-                    long codigo_convertido = atol(codigo.c_str());
-                    
-                    
-                    
+                    long codigo_convertido = atol(codigo.c_str());             
 
 
                     //Insere infos no docente
@@ -115,11 +104,12 @@ map<int,docentes> planilhaDocentes::ler(char **argv, int argc){
                     docente.setDataNascimento(parseDate(dataNascimento,DATE_FORMAT_PT_BR_SHORT));
                     docente.setEhCoordenador(ehCoordenador2);
                     docente.setNome(nome);
+                    docente.setPontuacao(0);
                     
 
                     //Insere o docente na lista de docentes
-                    mapaDocentes[j] = docente;
-                    j++;
+                    vetorDocentes.push_back(docente);
+
                 }
             }
             file.close();
@@ -141,9 +131,9 @@ map<int,docentes> planilhaDocentes::ler(char **argv, int argc){
     }*/
 
         //codigoRepetidoParaDocente(vetorDocentes);
-        return mapaDocentes;
+        return vetorDocentes;
 }
 
-void planilhaDocentes::codigoRepetidoParaDocente(map<int,docentes> mapaDocentes){
+void planilhaDocentes::codigoRepetidoParaDocente(vector<docentes> listaDocentes){
     
 }

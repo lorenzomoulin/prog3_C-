@@ -15,6 +15,8 @@
 #define VEICULOS_H
 
 #include <string>
+#include "qualificacoes.h"
+#include <vector>
 
 using namespace std;
 
@@ -24,14 +26,21 @@ class veiculos {
     string nome;
     double fatorImpacto;
     string issn;
-    const char * tipo;
+    string tipo;
+    vector<qualificacoes> qualis;
+    
 public:
     veiculos();
+    
+    vector<qualificacoes> getQualis();
+    
+    void setQualis(vector<qualificacoes> qualis);
+    
     string getSigla();
 
     string getNome();
 
-    const char * getTipo();
+    string getTipo();
 
     double getFatorImpacto();
     
@@ -41,7 +50,7 @@ public:
 
     void setNome(string nome);
 
-    void setTipo(const char * tipo);
+    void setTipo(string tipo);
 
     void setFatorImpacto(double fatorImpacto);
 

@@ -18,6 +18,14 @@ using namespace trabalho;
 veiculos::veiculos() {
 }
 
+vector<qualificacoes> veiculos::getQualis(){
+    return qualis;
+}
+    
+void veiculos::setQualis(vector<qualificacoes> qualis){
+    this->qualis = qualis;
+}
+
 double veiculos::getFatorImpacto(){
     return fatorImpacto;
 }
@@ -34,7 +42,7 @@ string veiculos::getSigla(){
     return sigla;
 }
 
-const char * veiculos::getTipo(){
+string veiculos::getTipo(){
     return tipo;
 }
 
@@ -54,6 +62,7 @@ void veiculos::setSigla(string sigla){
     this->sigla = sigla;
 }
 
-void veiculos::setTipo(const char * tipo){
+void veiculos::setTipo(string tipo){
     this->tipo = tipo;
 }
+

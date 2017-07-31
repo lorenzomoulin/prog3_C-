@@ -12,69 +12,125 @@
  */
 
 #include "geraPublicacoes.h"
-
-
+#include <fstream>
+#include <sstream>
+#include "NumberUtils.h"
+#include <algorithm>
+#include <limits.h>
+#include <cmath>
+using namespace cpp_util;
+using namespace std;
 using namespace trabalho;
 
 geraPublicacoes::geraPublicacoes() {
 }
 
-int geraPublicacoes::getAnoPublicacao(){
+int geraPublicacoes::getAnoPublicacao() {
     return anoPublicacao;
 }
 
-void geraPublicacoes::setAnoPublicacao(int anoPublicacao){
+void geraPublicacoes::setAnoPublicacao(int anoPublicacao) {
     this->anoPublicacao = anoPublicacao;
 }
 
-double geraPublicacoes::getFatorImpactoVeiculo(){
+double geraPublicacoes::getFatorImpactoVeiculo() {
     return fatorImpactoVeiculo;
 }
 
-void geraPublicacoes::setFatorImpactoVeiculo(double fatorImpactoVeiculo){
+void geraPublicacoes::setFatorImpactoVeiculo(double fatorImpactoVeiculo) {
     this->fatorImpactoVeiculo = fatorImpactoVeiculo;
 }
 
-vector<string> geraPublicacoes::getListaDocentes(){
+vector<string> geraPublicacoes::getListaDocentes() {
     return vetorDocentes;
 }
 
-void geraPublicacoes::setListaDocentes(vector<string> listaDocentes){
+void geraPublicacoes::setListaDocentes(vector<string> listaDocentes) {
     this->vetorDocentes = vetorDocentes;
 }
 
-string geraPublicacoes::getNomeVeiculo(){
+string geraPublicacoes::getNomeVeiculo() {
     return nomeVeiculo;
 }
 
-void geraPublicacoes::setNomeVeiculo(string nomeVeiculo){
+void geraPublicacoes::setNomeVeiculo(string nomeVeiculo) {
     this->nomeVeiculo = nomeVeiculo;
 }
 
-string geraPublicacoes::getQualisVeiculo(){
+string geraPublicacoes::getQualisVeiculo() {
     return qualisVeiculo;
 }
 
-void geraPublicacoes::setQualisVeiculo(string qualisVeiculo){
+void geraPublicacoes::setQualisVeiculo(string qualisVeiculo) {
     this->qualisVeiculo = qualisVeiculo;
 }
 
-string geraPublicacoes::getSiglaVeiculo(){
+string geraPublicacoes::getSiglaVeiculo() {
     return siglaVeiculo;
 }
 
-void geraPublicacoes::setSiglaVeiculo(string siglaVeiculo){
+void geraPublicacoes::setSiglaVeiculo(string siglaVeiculo) {
     this->siglaVeiculo = siglaVeiculo;
 }
 
-string geraPublicacoes::getTituloPublicacao(){
+string geraPublicacoes::getTituloPublicacao() {
     return tituloPublicacao;
 }
 
-void geraPublicacoes::setTituloPublicacao(string tituloPublicacao){
+void geraPublicacoes::setTituloPublicacao(string tituloPublicacao) {
     this->tituloPublicacao = tituloPublicacao;
 }
 
-void criaArquivoPublicacoes(vector<geraPublicacoes> vetorGera){
+void geraPublicacoes::publicacoesParaRelatorio(vector<publicacoes> vetorPublicacoes) {
+
+    stable_sort(vetorPublicacoes.begin(), vetorPublicacoes.end(), publicacoes::compareTo);
+    criaArquivoPublicacoes(vetorPublicacoes);
+}
+
+void geraPublicacoes::criaArquivoPublicacoes(vector<publicacoes> vetorPublicacoes) {
+
+    ofstream file("2-publicacoes.csv");
+    file << "Ano;Sigla Veículo;Veículo;Qualis;Fator de Impacto;Título;Docentes\n";
+    locale LOCALE_PT_BR(locale(), new NumPunctPTBR());
+    //FALTA FORMATAR O FATOR DE IMPACTO PARA 3 CASAS DECIMAIS
+    for (int i = 0; i < vetorPublicacoes.size(); i++) {
+        file << vetorPublicacoes[i].getAno() << ";" << vetorPublicacoes[i].getVeiculo().getSigla()
+                << ";" << vetorPublicacoes[i].getVeiculo().getNome() << ";";
+        geraPublicacoes g;
+        string aux = formatDouble(vetorPublicacoes[i].getVeiculo().getFatorImpacto(), LOCALE_PT_BR);
+        aux.resize(aux.size() - 3);
+        cout << aux << endl;
+        
+        qualificacoes qualis = g.qualisAtual(vetorPublicacoes[i].getVeiculo().getQualis(), vetorPublicacoes[i].getAno());
+        
+        file << qualis.getQualis() << ";" << aux << ";" << vetorPublicacoes[i].getTitulo() << ";";
+
+        for (int j = 0; j < vetorPublicacoes[i].getAutores().size(); j++) {
+            if (j == vetorPublicacoes[i].getAutores().size() - 1)
+                file << vetorPublicacoes[i].getAutores()[j].getNome();
+            else
+                file << vetorPublicacoes[i].getAutores()[j].getNome() << ",";
+        }
+        file << endl;
+    }
+}
+
+qualificacoes geraPublicacoes::qualisAtual(vector<qualificacoes> vetorQualis, int ano) {
+
+    int menor = INT_MAX, posicao = 0;
+    for (int i = 0; i < vetorQualis.size(); i++) {
+        int diff = ano - vetorQualis[i].getAno();
+        if (diff >= 0 && diff <= menor) {
+            menor = diff;
+            posicao = i;
+        }
+    }
     
+    
+    if (menor == INT_MAX){
+        qualificacoes qualis;
+        qualis.setQualis("NC");
+        return qualis;
+    }
+    return vetorQualis[posicao];
 }

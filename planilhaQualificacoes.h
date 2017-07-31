@@ -15,17 +15,18 @@
 #define PLANILHAQUALIFICACOES_H
 
 #include "qualificacoes.h"
+#include "veiculos.h"
 
 
 
 namespace trabalho{
 class planilhaQualificacoes {
-    map<int,qualificacoes> mapaQualificacoes; 
+    vector<qualificacoes> vetorQualificacoes; 
 public:
     planilhaQualificacoes();
-    map<int,qualificacoes> getListaQualificacoes();
-    void setListaQualificacoes(map<int,qualificacoes> mapaQualificacoes);
-    map<int,qualificacoes> ler(int argc, char** argv);
+    vector<qualificacoes> getListaQualificacoes();
+    void setListaQualificacoes(vector<qualificacoes> vetorQualificacoes);
+    vector<qualificacoes> ler(int argc, char** argv);
         
 private:
 

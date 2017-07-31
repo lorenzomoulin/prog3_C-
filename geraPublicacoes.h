@@ -62,12 +62,19 @@ public:
 
     void setListaDocentes(vector<string> listaDocentes);
     
-    static void criaArquivoEstatisticas(vector<geraPublicacoes> vetorGera);
+    static void publicacoesParaRelatorio(vector<publicacoes>);
     
+    
+    static void criaArquivoPublicacoes(vector<publicacoes>);
+    
+    qualificacoes qualisAtual(vector<qualificacoes>,int);
 private:
 
 };
+
+
 }
+
 
 #endif /* GERAPUBLICACOES_H */
 
