@@ -107,9 +107,22 @@ void estatisticasPublicacoes::criaArquivoEstatisticas() {
     file.open("3-estatisticas.csv");
     file << "Qualis;Qtd. Artigos;Média Artigos / Docente\n";
     locale LOCALE_PT_BR(locale(), new NumPunctPTBR());
+    char buff[100];
+    
+   
     for (int i = 0; i < estatisticasPublicacoes::qualis.size(); i++) {
-
-        file << estatisticasPublicacoes::qualis[i] << ";" << numeroArtigos[i] << ";" << formatDouble(numeroArtigosPorDocente[i], LOCALE_PT_BR) << "\n";
+        
+        
+        snprintf(buff, sizeof(buff), "%.2f", numeroArtigosPorDocente[i]);
+        
+        string aux(buff);
+        
+        double d = parseDouble(aux,LOCALE_PT_BR);
+        d/=100;
+       
+        string s = formatDoubleCurrency(d,LOCALE_PT_BR);
+        
+        file << estatisticasPublicacoes::qualis[i] << ";" << numeroArtigos[i] << ";" <<  s  << "\n";
     }
 
 

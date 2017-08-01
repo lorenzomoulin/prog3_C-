@@ -19,6 +19,15 @@ docentes::docentes() {
 
 }
 
+int docentes::getRecredenciado(){
+    return recredenciado;
+}  
+            
+void docentes::setRecredenciado(int recredenciado){
+    this->recredenciado = recredenciado;
+}
+
+
 double docentes::getPontuacao(){
     return pontuacao;
 }
@@ -99,4 +108,8 @@ bool docentes::temMaisDe60Anos(regrasDePontuacao regra) {
     tempo = tempo / 31557600000L;
 
     return tempo >= 60;
+}
+
+bool docentes::comparador(docentes d1, docentes d2){
+    return d1.nome < d2.nome;
 }

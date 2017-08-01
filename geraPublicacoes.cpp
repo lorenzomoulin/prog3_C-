@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <limits.h>
 #include <cmath>
+
 using namespace cpp_util;
 using namespace std;
 using namespace trabalho;
@@ -92,25 +93,41 @@ void geraPublicacoes::criaArquivoPublicacoes(vector<publicacoes> vetorPublicacoe
     ofstream file("2-publicacoes.csv");
     file << "Ano;Sigla Veículo;Veículo;Qualis;Fator de Impacto;Título;Docentes\n";
     locale LOCALE_PT_BR(locale(), new NumPunctPTBR());
-    //FALTA FORMATAR O FATOR DE IMPACTO PARA 3 CASAS DECIMAIS
+    char buff[100];
+    //awe
     for (int i = 0; i < vetorPublicacoes.size(); i++) {
+        
         file << vetorPublicacoes[i].getAno() << ";" << vetorPublicacoes[i].getVeiculo().getSigla()
                 << ";" << vetorPublicacoes[i].getVeiculo().getNome() << ";";
+        
         geraPublicacoes g;
-        string aux = formatDouble(vetorPublicacoes[i].getVeiculo().getFatorImpacto(), LOCALE_PT_BR);
-        aux.resize(aux.size() - 3);
-        cout << aux << endl;
+        
+        //GAMBIARRA ---->>> xD converte desconverte divide por 1000 converte resize xDDDD
+        snprintf(buff, sizeof(buff), "%.3f", vetorPublicacoes[i].getVeiculo().getFatorImpacto());
+        
+        string aux(buff);
+        
+        double d = parseDouble(aux,LOCALE_PT_BR);
+        
+        d/=1000;
+        
+        string s = formatDouble(d,LOCALE_PT_BR);
+        s.resize(s.size()-3);
+        
+        
         
         qualificacoes qualis = g.qualisAtual(vetorPublicacoes[i].getVeiculo().getQualis(), vetorPublicacoes[i].getAno());
         
-        file << qualis.getQualis() << ";" << aux << ";" << vetorPublicacoes[i].getTitulo() << ";";
+        file << qualis.getQualis() << ";" << s << ";" << vetorPublicacoes[i].getTitulo() << ";";
 
         for (int j = 0; j < vetorPublicacoes[i].getAutores().size(); j++) {
+            
             if (j == vetorPublicacoes[i].getAutores().size() - 1)
                 file << vetorPublicacoes[i].getAutores()[j].getNome();
             else
                 file << vetorPublicacoes[i].getAutores()[j].getNome() << ",";
         }
+        
         file << endl;
     }
 }
