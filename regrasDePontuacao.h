@@ -32,23 +32,23 @@ public:
     
     time_t getDataInicio();
 
-    void setDataInicio(time_t dataInicio);
+    void setDataInicio(time_t);
 
     time_t getDataFim();
 
-    void setDataFim(time_t dataFim); 
+    void setDataFim(time_t); 
 
     vector<string> getQualis();
 
-    void setQualis(vector<string> qualis);
+    void setQualis(vector<string>);
 
     vector<int> getPontos();
 
-    void setPontos(vector<int> pontos);
+    void setPontos(vector<int> );
 
     double getMultiplicador();
 
-    void setMultiplicador(double multiplicador);
+    void setMultiplicador(double);
 
     int getQuantidadeAnosConsiderar();
 
@@ -56,7 +56,7 @@ public:
 
     int getPontuacaoMinimaRecredenciamento();
 
-    void setPontuacaoMinimaRecredenciamento(int pontuacaoMinimaRecredenciamento);
+    void setPontuacaoMinimaRecredenciamento(int pontuacaoMinima);
     
     static void expandeQualis(vector<regrasDePontuacao>& vetorRegras, int ano);
     

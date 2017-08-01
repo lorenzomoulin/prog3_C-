@@ -16,6 +16,8 @@
 #include "NumberUtils.h"
 #include "Tokenizer.h"
 #include "geraPublicacoes.h"
+#include "docentes.h"
+#include <algorithm>
 
 #include <iostream>
 #include <fstream>
@@ -55,7 +57,7 @@ void recredenciamento::setRecredenciado(int recredenciado) {
     this->recredenciado = recredenciado;
 }
 
-void recredenciamento::calculaPontuacao(vector<docentes> vetorDocentes, int ano, vector<regrasDePontuacao> vetorRegras, vector<publicacoes> vetorPublicacoes) {
+void recredenciamento::calculaPontuacao(vector<docentes>& vetorDocentes, int ano, vector<regrasDePontuacao>& vetorRegras, vector<publicacoes>& vetorPublicacoes) {
 
     regrasDePontuacao regra;
 
@@ -93,7 +95,7 @@ void recredenciamento::calculaPontuacao(vector<docentes> vetorDocentes, int ano,
                 }
             }
         }
-        cout << vetorDocentes[i].getPontuacao() << endl;
+        cout << "pontuacao: " << vetorDocentes[i].getPontuacao() << endl;
     }
 
 
@@ -102,56 +104,74 @@ void recredenciamento::calculaPontuacao(vector<docentes> vetorDocentes, int ano,
 
 }
 
-void recredenciamento::recredencia(vector<docentes> vetorDocentes, int ano,
-        vector<regrasDePontuacao> vetorRegras, vector<veiculos> vetorVeiculos,
-        vector<publicacoes> vetorPublicacoes, vector<qualificacoes> vetorQualis) {
+void recredenciamento::recredencia(vector<docentes>& vetorDocentes, int ano,
+        vector<regrasDePontuacao>& vetorRegras, vector<veiculos>& vetorVeiculos,
+        vector<publicacoes>& vetorPublicacoes, vector<qualificacoes>& vetorQualis) {
     
     vector<recredenciamento> vetorRecredencia;
     calculaPontuacao(vetorDocentes, ano, vetorRegras, vetorPublicacoes);
     
     for (int i = 0; i < vetorDocentes.size(); i++) {
         for (int j = 0; j < vetorRegras.size(); j++) {
-            /*if (anoDaRegra == ano) {
-                recredenciamento recredencia;
-                recredencia.setNomeDocente(vetorDocentes[i].getNome());
+            time_t dataInicio = vetorRegras[j].getDataInicio();
+            string aux = formatDate(dataInicio, "%d/%m/%Y");
+            Tokenizer token(aux,'/');
+            vector<string> s = token.remaining();
+            
+            int anoDaRegra = atoi(s[2].c_str());
+            if (ano == anoDaRegra) {
+                
                 
                 //coordenadores, docentes com menos de 3 anos de entrada e docentes com mais de 60 anos sao recredenciados automaticamente
                 //caso contrario, verifica se a pontuação obtida é suficiente para recredenciar o docente
                 if (vetorDocentes[i].getEhCoordenador() == true) {
-                    recredencia.setRecredenciado(0);
+                    vetorDocentes[i].setRecredenciado(0);
                 } else if (vetorDocentes[i].entrouMenosDe3Anos(vetorRegras[j]) == true) {
-                    recredencia.setRecredenciado(1);
+                    vetorDocentes[i].setRecredenciado(1);
                 } else if (vetorDocentes[i].temMaisDe60Anos(vetorRegras[j]) == true) {
-                    recredencia.setRecredenciado(2);
-                } else if (pontuacaoObtida >= vetorRegras[j].getPontuacaoMinimaRecredenciamento()) {
-                    recredencia.setRecredenciado(3);
+                    vetorDocentes[i].setRecredenciado(2);
+                } else if (vetorDocentes[i].getPontuacao() >= vetorRegras[j].getPontuacaoMinimaRecredenciamento()) {
+                    vetorDocentes[i].setRecredenciado(3);
                 } else {
-                    recredencia.setRecredenciado(4);
-                }*/
-            //insere a pontuação na vetor de recredenciamento
-            //recredencia.setPontuacaoAlcancada(pontuacaoObtida);
-            // vetorRecredencia.push_back(recredencia);
-            //  }
+                    vetorDocentes[i].setRecredenciado(4);
+                }
+            
+           
+                
+              }
         }
     }
 
     //ordena a vetor de recredenciamento
-    //Collections.sort(vetorRecredencia);
-    criaArquivoRecredenciamento(vetorRecredencia);
+    docentes d;
+    stable_sort(vetorDocentes.begin(), vetorDocentes.end(), d.comparador);
+    criaArquivoRecredenciamento(vetorDocentes);
 }
 
-void recredenciamento::criaArquivoRecredenciamento(vector<recredenciamento> vetorRecredencia) {
+void recredenciamento::criaArquivoRecredenciamento(vector<docentes>& vetorDocentes) {
 
     ofstream file("1-recredenciamento.csv");
     file << "Docente;Pontuação;Recredenciado?\n";
-
-    for (int i = 0; i < vetorRecredencia.size(); i++) {
+    
+    for (int i = 0; i < vetorDocentes.size(); i++) {
         locale LOCALE_PT_BR(locale(), new NumPunctPTBR());
-        string formatado = formatDouble(vetorRecredencia[i].getPontuacaoAlcancada(), LOCALE_PT_BR);
-        file << vetorRecredencia[i].getNomeDocente() << ";"
-                << formatado << ";";
+        string formatado = formatDouble(vetorDocentes[i].getPontuacao(), LOCALE_PT_BR);
+        char buff[100];
+        snprintf(buff, sizeof(buff), "%.1f", vetorDocentes[i].getPontuacao());
+        
+        string aux(buff);
+        
+        double d = parseDouble(aux,LOCALE_PT_BR);
+        
+        d/=10;
+        
+        string s = formatDouble(d,LOCALE_PT_BR);
+        s.resize(s.size()-5);
+        
+        file << vetorDocentes[i].getNome() << ";"
+                << s << ";";
 
-        switch (vetorRecredencia[i].getRecredenciado()) {
+        switch (vetorDocentes[i].getRecredenciado()) {
             case 0:
                 file << "Coordenador\n";
                 break;
@@ -194,3 +214,4 @@ regrasDePontuacao recredenciamento::retornaRegraRecredenciamento(vector<regrasDe
         }
     }
 }
+

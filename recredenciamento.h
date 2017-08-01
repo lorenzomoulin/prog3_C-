@@ -49,12 +49,12 @@ namespace trabalho {
         void setRecredenciado(int);
 
         //dado um docente e o ano de recredenciamento, calcula sua pontuação
-        static void calculaPontuacao(vector<docentes>, int, vector<regrasDePontuacao>, vector<publicacoes>);
+        static void calculaPontuacao(vector<docentes>&, int, vector<regrasDePontuacao>&, vector<publicacoes>&);
         
-        static void recredencia(vector<docentes> , int, vector<regrasDePontuacao>,
-        vector<veiculos>, vector<publicacoes>, vector<qualificacoes>);
+        static void recredencia(vector<docentes>& , int, vector<regrasDePontuacao>&,
+        vector<veiculos>&, vector<publicacoes>&, vector<qualificacoes>&);
         
-        static void criaArquivoRecredenciamento(vector<recredenciamento>);
+        static void criaArquivoRecredenciamento(vector<docentes>&);
         
         regrasDePontuacao retornaRegraRecredenciamento(vector<regrasDePontuacao>, int);
         

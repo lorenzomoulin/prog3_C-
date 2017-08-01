@@ -60,7 +60,7 @@ double regrasDePontuacao::getMultiplicador(){
     return fatorMultiplicador;
 }
 
-void regrasDePontuacao::setMultiplicador(double multiplicador){
+void regrasDePontuacao::setMultiplicador(double fatorMultiplicador){
     this->fatorMultiplicador = fatorMultiplicador;
 }
 
@@ -76,7 +76,7 @@ int regrasDePontuacao::getPontuacaoMinimaRecredenciamento(){
     return pontuacaoMinima;
 }
 
-void regrasDePontuacao::setPontuacaoMinimaRecredenciamento(int pontuacaoMinimaRecredenciamento){
+void regrasDePontuacao::setPontuacaoMinimaRecredenciamento(int pontuacaoMinima){
     this->pontuacaoMinima = pontuacaoMinima;
 }
 

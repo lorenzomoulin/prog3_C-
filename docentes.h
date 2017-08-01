@@ -31,9 +31,14 @@ namespace trabalho {
         bool EhCoordenador;
         long codigo;
         double pontuacao;
+        int recredenciado;
         
         public:
             docentes();
+            
+            int getRecredenciado();
+            
+            void setRecredenciado(int);
             
             double getPontuacao();
             
@@ -62,7 +67,8 @@ namespace trabalho {
             bool entrouMenosDe3Anos(regrasDePontuacao);
             
             bool temMaisDe60Anos(regrasDePontuacao);
-                       
+                   
+            static bool comparador(docentes,docentes);
         private:
 
             
